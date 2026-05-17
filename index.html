@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>請求書作成</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+
+  <h2>請求書入力</h2>
+
+  <div>
+    <label>工事名：</label><br>
+    <input type="text" id="project" style="width:300px;"><br><br>
+
+    <label>業者名：</label><br>
+    <input type="text" id="vendor" style="width:300px;"><br><br>
+
+    <label>金額：</label><br>
+    <input type="number" id="amount" style="width:300px;"><br><br>
+
+    <label>日付：</label><br>
+    <input type="date" id="date"><br><br>
+  </div>
+
+  <button onclick="generatePDF()" style="padding:10px 20px; font-size:16px;">
+    PDF生成
+  </button>
+
+  <script>
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const project = document.getElementById("project").value;
+      const vendor = document.getElementById("vendor").value;
+      const amount = document.getElementById("amount").value;
+      const date = document.getElementById("date").value;
+
+      doc.setFontSize(18);
+      doc.text("請求書", 90, 20);
+
+      doc.setFontSize(12);
+      doc.text("工事名: " + project, 20, 40);
+      doc.text("業者名: " + vendor, 20, 50);
+      doc.text("金額: " + amount + " 円", 20, 60);
+      doc.text("日付: " + date, 20, 70);
+
+      doc.save("invoice.pdf");
+    }
+  </script>
+
+</body>
+</html>
